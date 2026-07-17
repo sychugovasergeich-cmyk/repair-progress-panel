@@ -4,6 +4,7 @@ const stagesGrid = document.querySelector("#stagesGrid");
 const chatMessages = document.querySelector("#chatMessages");
 const issuesList = document.querySelector("#issuesList");
 const photoReportGrid = document.querySelector("#photoReportGrid");
+const actionsList = document.querySelector("#actionsList");
 const issueFilterButtons = [...document.querySelectorAll("[data-issue-filter]")];
 let activeIssueFilter = "all";
 
@@ -30,6 +31,26 @@ const mockData = {
       status: "Принято",
       tone: "done",
       text: "Зона очищена, этап закрыт без дополнительных вопросов.",
+    },
+  ],
+  actions: [
+    {
+      title: "Сделать фото кухни перед закрытием стен",
+      date: "Сегодня до 18:00",
+      owner: "Прораб",
+      link: "Связано с замечанием заказчика",
+    },
+    {
+      title: "Проверить сантехнические соединения",
+      date: "Завтра утром",
+      owner: "Сантехник",
+      link: "После проверки можно закрывать этап",
+    },
+    {
+      title: "Согласовать старт отделочных работ",
+      date: "После приемки коммуникаций",
+      owner: "Прораб и заказчик",
+      link: "Следующий этап после электрики и сантехники",
     },
   ],
   issues: [
@@ -304,6 +325,39 @@ function renderPhotoReport() {
   });
 }
 
+function renderActions() {
+  if (!actionsList) {
+    return;
+  }
+
+  actionsList.innerHTML = "";
+
+  mockData.actions.forEach((action, index) => {
+    const item = document.createElement("li");
+    item.className = "action-item";
+
+    const number = document.createElement("span");
+    number.className = "action-number";
+    number.textContent = String(index + 1).padStart(2, "0");
+
+    const content = document.createElement("div");
+    content.className = "action-content";
+
+    const title = document.createElement("strong");
+    title.textContent = action.title;
+
+    const meta = document.createElement("p");
+    meta.textContent = `${action.date} · ${action.owner}`;
+
+    const link = document.createElement("span");
+    link.textContent = action.link;
+
+    content.append(title, meta, link);
+    item.append(number, content);
+    actionsList.append(item);
+  });
+}
+
 function updateSummary() {
   const done = mockData.stages.filter((s) => s.status === "done").length;
   const active = mockData.stages.filter((s) => s.status === "active").length;
@@ -346,5 +400,6 @@ renderIssues();
 renderChat();
 renderStages();
 renderPhotoReport();
+renderActions();
 updateSummary();
 setState("filled");

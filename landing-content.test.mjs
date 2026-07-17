@@ -14,6 +14,9 @@ const requiredHtml = [
   "Фото по объекту",
   'id="photoReport"',
   'id="photoReportGrid"',
+  "Ближайшие действия",
+  'id="nextActions"',
+  'id="actionsList"',
   "Замечание заказчика",
   "Замечания",
   "Что требует внимания",
@@ -53,6 +56,11 @@ assert.ok(app.includes("Кухня перед закрытием стен"));
 assert.ok(app.includes("Сантехнические выводы"));
 assert.ok(app.includes("Демонтаж после вывоза мусора"));
 assert.ok(app.includes("renderPhotoReport"));
+assert.ok(app.includes("actions"));
+assert.ok(app.includes("Сделать фото кухни перед закрытием стен"));
+assert.ok(app.includes("Проверить сантехнические соединения"));
+assert.ok(app.includes("Согласовать старт отделочных работ"));
+assert.ok(app.includes("renderActions"));
 assert.ok(app.includes("issues"));
 assert.ok(app.includes("Розетка у рабочего стола"));
 assert.ok(app.includes("Фото кухни перед приемкой"));
