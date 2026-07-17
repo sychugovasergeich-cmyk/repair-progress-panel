@@ -1,0 +1,10 @@
+{
+  "name": "repair-progress-foreman-panel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node landing-content.test.mjs",
+    "start": "powershell -ExecutionPolicy Bypass -File ./serve.ps1"
+  }
+}

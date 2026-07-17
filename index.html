@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Панель прораба: ремонт квартиры</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="repair-progress-panel">
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="pageTitle">
+        <div class="hero-copy">
+          <p class="eyebrow">Учебный прототип</p>
+          <h1 id="pageTitle">Панель прораба</h1>
+          <p class="hero-text">
+            Ремонт квартиры: спокойный экран для показа заказчику, что уже сделано,
+            что сейчас в работе и где есть замечания.
+          </p>
+        </div>
+
+        <aside class="progress-panel" aria-label="Общий прогресс">
+          <span class="object-label">Ремонт квартиры</span>
+          <strong>62% готово</strong>
+          <div class="progress-track" aria-hidden="true">
+            <span></span>
+          </div>
+          <p>Сейчас в фокусе: сантехника и подготовка к отделке.</p>
+        </aside>
+      </section>
+
+      <section class="summary-grid" aria-label="Сводка по ремонту">
+        <article data-summary="done">
+          <span>Завершено</span>
+          <strong>2 этапа</strong>
+          <p>Демонтаж и черновые работы закрыты.</p>
+        </article>
+        <article data-summary="active">
+          <span>В работе</span>
+          <strong>2 этапа</strong>
+          <p>Электрика и сантехника обновлены сегодня.</p>
+        </article>
+        <article data-summary="waiting">
+          <span>Ожидает</span>
+          <strong>1 этап</strong>
+          <p>Отделочные работы начнутся после приемки.</p>
+        </article>
+      </section>
+
+      <details class="state-checker">
+        <summary>
+          <span>Учебная проверка экрана</span>
+          <strong id="stateMessage" role="status">Данные по этапам показаны.</strong>
+        </summary>
+        <div class="state-toolbar" aria-label="Учебные состояния">
+          <div>
+            <p class="eyebrow">Состояние экрана</p>
+            <h2>Проверка сценариев</h2>
+          </div>
+          <div class="state-buttons" role="group" aria-label="Переключить состояние">
+            <button class="is-active" type="button" data-state-button="filled">Заполнено</button>
+            <button type="button" data-state-button="empty">Пусто</button>
+            <button type="button" data-state-button="error">Ошибка</button>
+            <button type="button" data-state-button="success">Успех</button>
+          </div>
+        </div>
+      </details>
+
+      <section class="workspace">
+        <div class="section-heading">
+          <p class="eyebrow">Этапы</p>
+          <h2>Ход ремонта квартиры</h2>
+        </div>
+
+        <div class="stages-grid" id="stagesGrid"></div>
+      </section>
+
+      <section class="details-grid">
+        <article class="client-note">
+          <p class="eyebrow">Связь по объекту</p>
+          <h2>Замечание заказчика</h2>
+          <p>
+            “Пожалуйста, отдельно покажите фото зоны кухни перед закрытием стен.”
+          </p>
+          <span>Ответ прораба: добавим фото в следующий отчет.</span>
+        </article>
+
+        <article class="issues-panel" id="issuesPanel">
+          <p class="eyebrow">Замечания</p>
+          <h2>Что требует внимания</h2>
+          <div class="issue-filters" role="group" aria-label="Фильтр замечаний">
+            <button class="is-active" type="button" data-issue-filter="all">Все</button>
+            <button type="button" data-issue-filter="new">Новые</button>
+            <button type="button" data-issue-filter="progress">В работе</button>
+            <button type="button" data-issue-filter="closed">Закрытые</button>
+          </div>
+          <ul class="issues-list" id="issuesList" aria-label="Учебный список замечаний"></ul>
+        </article>
+
+        <article class="object-chat" id="objectChat">
+          <p class="eyebrow">Чат по объекту</p>
+          <h2>История сообщений</h2>
+          <ul class="chat-list" id="chatMessages" aria-label="Учебная история сообщений"></ul>
+        </article>
+
+        <article class="how-it-works">
+          <p class="eyebrow">Как это работает</p>
+          <h2>Один экран для показа прогресса</h2>
+          <p>
+            Прораб открывает панель, показывает процент готовности и проходит с заказчиком по этапам.
+            Это учебная версия: данные демонстрационные, ничего не отправляется и не хранится.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
