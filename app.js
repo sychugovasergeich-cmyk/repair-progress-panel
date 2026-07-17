@@ -8,6 +8,7 @@ const issuesList = document.querySelector("#issuesList");
 const photoReportGrid = document.querySelector("#photoReportGrid");
 const actionsList = document.querySelector("#actionsList");
 const updatesList = document.querySelector("#updatesList");
+const clientSummaryGrid = document.querySelector("#clientSummaryGrid");
 const stageFilterButtons = [...document.querySelectorAll("[data-stage-filter]")];
 const issueFilterButtons = [...document.querySelectorAll("[data-issue-filter]")];
 let activeStageFilter = "all";
@@ -111,6 +112,23 @@ const mockData = {
       date: "21 июня",
       title: "Черновые работы закрыты",
       text: "Стены выровнены, поверхности готовы к коммуникациям.",
+    },
+  ],
+  clientSummary: [
+    {
+      label: "Общий статус",
+      title: "Ремонт идет по плану",
+      text: "Закрыты 2 этапа, в работе электрика и сантехника.",
+    },
+    {
+      label: "Что важно",
+      title: "Нужно показать кухню",
+      text: "Перед закрытием стен прораб добавит отдельное фото.",
+    },
+    {
+      label: "Следующий шаг",
+      title: "Проверка коммуникаций",
+      text: "После приемки можно согласовать старт отделки.",
     },
   ],
   issues: [
@@ -511,6 +529,31 @@ function renderUpdates() {
   });
 }
 
+function renderClientSummary() {
+  if (!clientSummaryGrid) {
+    return;
+  }
+
+  clientSummaryGrid.innerHTML = "";
+
+  mockData.clientSummary.forEach((summary) => {
+    const card = document.createElement("article");
+    card.className = "client-summary-card";
+
+    const label = document.createElement("span");
+    label.textContent = summary.label;
+
+    const title = document.createElement("strong");
+    title.textContent = summary.title;
+
+    const text = document.createElement("p");
+    text.textContent = summary.text;
+
+    card.append(label, title, text);
+    clientSummaryGrid.append(card);
+  });
+}
+
 function updateSummary() {
   const done = mockData.stages.filter((s) => s.status === "done").length;
   const active = mockData.stages.filter((s) => s.status === "active").length;
@@ -571,5 +614,6 @@ renderStages();
 renderPhotoReport();
 renderActions();
 renderUpdates();
+renderClientSummary();
 updateSummary();
 setState("filled");

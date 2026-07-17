@@ -76,6 +76,7 @@ p {
   .photo-report,
   .next-actions,
   .updates-panel,
+  .client-summary,
   .client-note,
   .issues-panel,
   .object-chat,
@@ -414,6 +415,12 @@ h3 {
   padding: 22px;
 }
 
+.client-summary {
+  margin-bottom: 18px;
+  padding: 22px;
+  background: #f9fcf8;
+}
+
 .section-heading {
   margin-bottom: 18px;
 }
@@ -671,6 +678,42 @@ h3 {
   line-height: 1.45;
 }
 
+.client-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.client-summary-card {
+  min-width: 0;
+  border: 1px solid rgba(31, 104, 77, 0.18);
+  border-radius: 8px;
+  padding: 16px;
+  background: var(--panel);
+}
+
+.client-summary-card span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.client-summary-card strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.client-summary-card p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 .stage-content {
   min-width: 0;
 }
@@ -896,6 +939,7 @@ body[data-view-state="empty"] .stages-grid,
 body[data-view-state="empty"] .photo-report,
 body[data-view-state="empty"] .next-actions,
 body[data-view-state="empty"] .updates-panel,
+body[data-view-state="empty"] .client-summary,
 body[data-view-state="empty"] .details-grid {
   display: none;
 }
@@ -918,6 +962,7 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
   .acceptance-list,
   .photo-report-grid,
   .actions-list,
+  .client-summary-grid,
   .details-grid,
   .stages-grid {
     grid-template-columns: 1fr;
@@ -956,6 +1001,7 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
   .photo-report,
   .next-actions,
   .updates-panel,
+  .client-summary,
   .client-note,
   .issues-panel,
   .object-chat,

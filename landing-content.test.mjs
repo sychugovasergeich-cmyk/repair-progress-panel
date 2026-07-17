@@ -19,6 +19,9 @@ const requiredHtml = [
   "Что изменилось на объекте",
   'id="updatesPanel"',
   'id="updatesList"',
+  "Кратко для заказчика",
+  'id="clientSummary"',
+  'id="clientSummaryGrid"',
   "Фотоотчет",
   "Фото по объекту",
   'id="photoReport"',
@@ -88,6 +91,11 @@ assert.ok(app.includes("Добавлен запрос на фото кухни")
 assert.ok(app.includes("Сантехника перешла в работу"));
 assert.ok(app.includes("Черновые работы закрыты"));
 assert.ok(app.includes("renderUpdates"));
+assert.ok(app.includes("clientSummary"));
+assert.ok(app.includes("Ремонт идет по плану"));
+assert.ok(app.includes("Нужно показать кухню"));
+assert.ok(app.includes("Проверка коммуникаций"));
+assert.ok(app.includes("renderClientSummary"));
 assert.ok(app.includes("issues"));
 assert.ok(app.includes("Розетка у рабочего стола"));
 assert.ok(app.includes("Фото кухни перед приемкой"));
