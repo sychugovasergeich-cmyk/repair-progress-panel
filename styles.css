@@ -541,9 +541,11 @@ h3 {
   border: 1px solid #cfd9ce;
   border-radius: 8px;
   background:
-    linear-gradient(135deg, rgba(49, 95, 130, 0.14), transparent 48%),
-    linear-gradient(315deg, rgba(31, 104, 77, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(11, 18, 24, 0.08), rgba(11, 18, 24, 0.36)),
+    url("./assets/photos/site.jpg"),
     #edf2ec;
+  background-position: center;
+  background-size: cover;
   color: var(--muted);
   font-weight: 900;
   text-align: center;
@@ -559,7 +561,7 @@ h3 {
   background:
     linear-gradient(90deg, transparent 48%, rgba(23, 32, 28, 0.1) 49%, transparent 51%),
     linear-gradient(0deg, transparent 48%, rgba(23, 32, 28, 0.08) 49%, transparent 51%);
-  opacity: 0.7;
+  opacity: 0.42;
 }
 
 .photo-placeholder span,
@@ -568,7 +570,8 @@ h3 {
   z-index: 1;
   border-radius: 999px;
   padding: 7px 11px;
-  background: rgba(255, 255, 255, 0.76);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 20px rgba(23, 32, 28, 0.14);
 }
 
 .photo-report-grid {
@@ -593,9 +596,11 @@ h3 {
   min-height: 150px;
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(23, 32, 28, 0.1), transparent 42%),
-    linear-gradient(315deg, rgba(49, 95, 130, 0.18), transparent 50%),
+    linear-gradient(180deg, rgba(11, 18, 24, 0.08), rgba(11, 18, 24, 0.34)),
+    url("./assets/photos/site.jpg"),
     #eef3ef;
+  background-position: center;
+  background-size: cover;
   color: var(--muted);
   font-weight: 900;
 }
@@ -603,9 +608,11 @@ h3 {
 .photo-placeholder.is-interior,
 .photo-preview.is-interior {
   background:
-    linear-gradient(135deg, rgba(180, 122, 43, 0.18), transparent 42%),
-    linear-gradient(315deg, rgba(49, 95, 130, 0.16), transparent 48%),
+    linear-gradient(180deg, rgba(11, 18, 24, 0.04), rgba(11, 18, 24, 0.28)),
+    url("./assets/photos/interior.jpg"),
     #f7f0e7;
+  background-position: center;
+  background-size: cover;
 }
 
 .photo-placeholder.is-interior::before,
@@ -618,9 +625,11 @@ h3 {
 .photo-placeholder.is-plumbing,
 .photo-preview.is-plumbing {
   background:
-    linear-gradient(135deg, rgba(49, 95, 130, 0.22), transparent 44%),
-    linear-gradient(315deg, rgba(31, 104, 77, 0.12), transparent 48%),
+    linear-gradient(180deg, rgba(11, 18, 24, 0.04), rgba(11, 18, 24, 0.32)),
+    url("./assets/photos/plumbing.jpg"),
     #edf7fb;
+  background-position: center;
+  background-size: cover;
 }
 
 .photo-placeholder.is-plumbing::before,
@@ -634,9 +643,11 @@ h3 {
 .photo-placeholder.is-electric,
 .photo-preview.is-electric {
   background:
-    linear-gradient(135deg, rgba(180, 122, 43, 0.24), transparent 44%),
-    linear-gradient(315deg, rgba(23, 32, 28, 0.1), transparent 48%),
+    linear-gradient(180deg, rgba(11, 18, 24, 0.04), rgba(11, 18, 24, 0.32)),
+    url("./assets/photos/electric.jpg"),
     #fff6dc;
+  background-position: center;
+  background-size: cover;
 }
 
 .photo-placeholder.is-electric::before,
@@ -649,9 +660,11 @@ h3 {
 .photo-placeholder.is-demolition,
 .photo-preview.is-demolition {
   background:
-    linear-gradient(135deg, rgba(104, 116, 109, 0.28), transparent 42%),
-    linear-gradient(315deg, rgba(179, 75, 63, 0.16), transparent 48%),
+    linear-gradient(180deg, rgba(11, 18, 24, 0.04), rgba(11, 18, 24, 0.34)),
+    url("./assets/photos/demolition.jpg"),
     #f1f0eb;
+  background-position: center;
+  background-size: cover;
 }
 
 .photo-placeholder.is-demolition::before,
@@ -665,9 +678,11 @@ h3 {
 .photo-placeholder.is-rough,
 .photo-preview.is-rough {
   background:
-    linear-gradient(135deg, rgba(104, 116, 109, 0.2), transparent 42%),
-    linear-gradient(315deg, rgba(49, 95, 130, 0.12), transparent 48%),
+    linear-gradient(180deg, rgba(11, 18, 24, 0.04), rgba(11, 18, 24, 0.3)),
+    url("./assets/photos/rough.jpg"),
     #f0f2ee;
+  background-position: center;
+  background-size: cover;
 }
 
 .photo-placeholder.is-rough::before,
@@ -680,9 +695,21 @@ h3 {
 .photo-placeholder.is-finish,
 .photo-preview.is-finish {
   background:
-    linear-gradient(135deg, rgba(31, 104, 77, 0.16), transparent 42%),
-    linear-gradient(315deg, rgba(180, 122, 43, 0.16), transparent 48%),
+    linear-gradient(180deg, rgba(11, 18, 24, 0.04), rgba(11, 18, 24, 0.3)),
+    url("./assets/photos/finish.jpg"),
     #f7fbf3;
+  background-position: center;
+  background-size: cover;
+}
+
+.photo-placeholder.is-site,
+.photo-preview.is-site {
+  background:
+    linear-gradient(180deg, rgba(11, 18, 24, 0.06), rgba(11, 18, 24, 0.34)),
+    url("./assets/photos/site.jpg"),
+    #eef3ef;
+  background-position: center;
+  background-size: cover;
 }
 
 .photo-placeholder.is-finish::before,
@@ -693,24 +720,15 @@ h3 {
 }
 
 .photo-card.is-attention .photo-preview {
-  background:
-    linear-gradient(135deg, rgba(179, 75, 63, 0.16), transparent 44%),
-    linear-gradient(315deg, rgba(180, 122, 43, 0.18), transparent 46%),
-    #fff4ed;
+  border-bottom: 3px solid var(--red);
 }
 
 .photo-card.is-progress .photo-preview {
-  background:
-    linear-gradient(135deg, rgba(49, 95, 130, 0.18), transparent 44%),
-    linear-gradient(315deg, rgba(31, 104, 77, 0.12), transparent 46%),
-    #eef6fb;
+  border-bottom: 3px solid var(--blue);
 }
 
 .photo-card.is-done .photo-preview {
-  background:
-    linear-gradient(135deg, rgba(31, 104, 77, 0.18), transparent 44%),
-    linear-gradient(315deg, rgba(104, 116, 109, 0.12), transparent 46%),
-    #edf6f0;
+  border-bottom: 3px solid var(--green);
 }
 
 .photo-card-content {

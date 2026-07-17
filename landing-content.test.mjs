@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 
 const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
 const app = readFileSync(new URL("./app.js", import.meta.url), "utf8");
+const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
 
 const requiredHtml = [
   'data-page="repair-progress-panel"',
@@ -135,6 +136,20 @@ assert.equal(html.includes("оплата"), false);
 assert.equal(html.includes("API-ключ"), false);
 
 const commonMojibakeMarkers = ["Рљ", "Р°", "СЊ", "С‚", "Рґ", "Рё", "Рј"];
+const requiredPhotoAssets = [
+  "./assets/photos/demolition.jpg",
+  "./assets/photos/electric.jpg",
+  "./assets/photos/finish.jpg",
+  "./assets/photos/interior.jpg",
+  "./assets/photos/plumbing.jpg",
+  "./assets/photos/rough.jpg",
+  "./assets/photos/site.jpg",
+];
+
+for (const asset of requiredPhotoAssets) {
+  assert.ok(css.includes(asset), `Missing contextual photo asset in CSS: ${asset}`);
+}
+
 for (const marker of commonMojibakeMarkers) {
   assert.equal(html.includes(marker), false, `Page contains mojibake: ${marker}`);
   assert.equal(app.includes(marker), false, `App contains mojibake: ${marker}`);
