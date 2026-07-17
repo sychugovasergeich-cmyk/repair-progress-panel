@@ -29,6 +29,12 @@ const requiredHtml = [
   "Фото по объекту",
   'id="photoReport"',
   'id="photoReportGrid"',
+  'id="photoUploadForm"',
+  'id="photoFileInput"',
+  'id="photoStageInput"',
+  'id="photoTitleInput"',
+  'id="photoCommentInput"',
+  'id="photoUploadStatus"',
   "Ближайшие действия",
   'id="nextActions"',
   'id="actionsList"',
@@ -41,6 +47,11 @@ const requiredHtml = [
   'data-issue-filter="new"',
   'data-issue-filter="progress"',
   'data-issue-filter="closed"',
+  'id="issueForm"',
+  'id="issueTitleInput"',
+  'id="issueTextInput"',
+  'id="issueStatusInput"',
+  'id="issueFormStatus"',
   "Чат по объекту",
   "История сообщений",
   'id="objectChat"',
@@ -93,6 +104,11 @@ assert.ok(app.includes("Демонтаж после вывоза мусора"))
 assert.ok(app.includes("getPhotoTheme"));
 assert.ok(app.includes("getPhotoLabel"));
 assert.ok(app.includes("is-${getPhotoTheme"));
+assert.ok(app.includes("handlePhotoUpload"));
+assert.ok(app.includes("readPhotoAsDataUrl"));
+assert.ok(app.includes("FileReader"));
+assert.ok(app.includes("saveProjectData"));
+assert.ok(app.includes("photoUploadForm?.addEventListener"));
 assert.ok(app.includes("renderPhotoReport"));
 assert.ok(app.includes("actions"));
 assert.ok(app.includes("Сделать фото кухни перед закрытием стен"));
@@ -114,6 +130,9 @@ assert.ok(app.includes("Розетка у рабочего стола"));
 assert.ok(app.includes("Фото кухни перед приемкой"));
 assert.ok(app.includes("Вывоз мусора после демонтажа"));
 assert.ok(app.includes("renderIssues"));
+assert.ok(app.includes("handleIssueSubmit"));
+assert.ok(app.includes("getIssueStatusText"));
+assert.ok(app.includes("issueForm?.addEventListener"));
 assert.ok(app.includes("activeIssueFilter"));
 assert.ok(app.includes("issueFilterButtons"));
 assert.ok(app.includes("Замечаний с таким статусом нет."));

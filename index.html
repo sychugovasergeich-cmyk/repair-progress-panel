@@ -113,6 +113,40 @@
           <h2 id="photoReportTitle">Фото по объекту</h2>
         </div>
 
+        <form class="photo-upload-form" id="photoUploadForm">
+          <div class="form-row">
+            <label>
+              <span>Фото с объекта</span>
+              <input id="photoFileInput" type="file" accept="image/*" required />
+            </label>
+            <label>
+              <span>Этап</span>
+              <select id="photoStageInput" required>
+                <option value="Демонтаж">Демонтаж</option>
+                <option value="Черновые работы">Черновые работы</option>
+                <option value="Электрика">Электрика</option>
+                <option value="Сантехника">Сантехника</option>
+                <option value="Отделка">Отделка</option>
+                <option value="Интерьер">Интерьер</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-row">
+            <label>
+              <span>Подпись</span>
+              <input id="photoTitleInput" type="text" placeholder="Например: кухня после прокладки кабеля" required />
+            </label>
+            <label>
+              <span>Комментарий</span>
+              <input id="photoCommentInput" type="text" placeholder="Что важно показать на фото" />
+            </label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Добавить фото в отчет</button>
+            <p id="photoUploadStatus" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
         <div class="photo-report-grid" id="photoReportGrid"></div>
       </section>
 
@@ -162,6 +196,29 @@
             <button type="button" data-issue-filter="progress">В работе</button>
             <button type="button" data-issue-filter="closed">Закрытые</button>
           </div>
+          <form class="issue-form" id="issueForm">
+            <label>
+              <span>Тема правки</span>
+              <input id="issueTitleInput" type="text" placeholder="Например: переделать шов на плитке" required />
+            </label>
+            <label>
+              <span>Описание</span>
+              <textarea id="issueTextInput" rows="3" placeholder="Какую правку нужно внести" required></textarea>
+            </label>
+            <div class="form-row">
+              <label>
+                <span>Статус</span>
+                <select id="issueStatusInput">
+                  <option value="new">Новая</option>
+                  <option value="progress">В работе</option>
+                  <option value="closed">Закрыта</option>
+                </select>
+              </label>
+              <button type="submit">Добавить правку</button>
+            </div>
+            <p id="issueFormStatus" role="status" aria-live="polite"></p>
+          </form>
+
           <ul class="issues-list" id="issuesList" aria-label="Учебный список замечаний"></ul>
         </article>
 

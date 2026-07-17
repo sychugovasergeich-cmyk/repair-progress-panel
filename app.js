@@ -15,6 +15,17 @@ const clientNoteResponse = document.querySelector("#clientNoteResponse");
 const chatMessages = document.querySelector("#chatMessages");
 const issuesList = document.querySelector("#issuesList");
 const photoReportGrid = document.querySelector("#photoReportGrid");
+const photoUploadForm = document.querySelector("#photoUploadForm");
+const photoFileInput = document.querySelector("#photoFileInput");
+const photoStageInput = document.querySelector("#photoStageInput");
+const photoTitleInput = document.querySelector("#photoTitleInput");
+const photoCommentInput = document.querySelector("#photoCommentInput");
+const photoUploadStatus = document.querySelector("#photoUploadStatus");
+const issueForm = document.querySelector("#issueForm");
+const issueTitleInput = document.querySelector("#issueTitleInput");
+const issueTextInput = document.querySelector("#issueTextInput");
+const issueStatusInput = document.querySelector("#issueStatusInput");
+const issueFormStatus = document.querySelector("#issueFormStatus");
 const actionsList = document.querySelector("#actionsList");
 const updatesList = document.querySelector("#updatesList");
 const clientSummaryGrid = document.querySelector("#clientSummaryGrid");
@@ -628,6 +639,10 @@ const projectObjects = [
   },
 ];
 
+const storageKey = "repair-progress-panel-data-v2";
+
+loadSavedProjectData();
+
 let mockData = projectObjects[0];
 
 const stateCopy = {
@@ -648,6 +663,50 @@ const stateCopy = {
     className: "is-success",
   },
 };
+
+function loadSavedProjectData() {
+  try {
+    const savedData = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
+    savedData.forEach((savedObject) => {
+      const targetObject = projectObjects.find((object) => object.id === savedObject.id);
+
+      if (!targetObject) {
+        return;
+      }
+
+      if (Array.isArray(savedObject.photos)) {
+        targetObject.photos = savedObject.photos;
+      }
+
+      if (Array.isArray(savedObject.issues)) {
+        targetObject.issues = savedObject.issues;
+      }
+
+      if (Array.isArray(savedObject.updates)) {
+        targetObject.updates = savedObject.updates;
+      }
+    });
+  } catch {
+    localStorage.removeItem(storageKey);
+  }
+}
+
+function saveProjectData() {
+  try {
+    const dataToSave = projectObjects.map((object) => ({
+      id: object.id,
+      issues: object.issues,
+      photos: object.photos,
+      updates: object.updates,
+    }));
+
+    localStorage.setItem(storageKey, JSON.stringify(dataToSave));
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 function setState(nextState) {
   const selectedState = stateCopy[nextState] ? nextState : "filled";
@@ -911,6 +970,49 @@ function renderIssues() {
   });
 }
 
+function getIssueStatusText(status) {
+  const labels = {
+    closed: "Закрыто",
+    new: "Новое",
+    progress: "В работе",
+  };
+
+  return labels[status] || labels.new;
+}
+
+function setIssueFilter(nextFilter) {
+  activeIssueFilter = nextFilter;
+
+  issueFilterButtons.forEach((filterButton) => {
+    const isActive = filterButton.dataset.issueFilter === nextFilter;
+    filterButton.classList.toggle("is-active", isActive);
+    filterButton.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function addObjectUpdate(title, text) {
+  if (!mockData.updates) {
+    mockData.updates = [];
+  }
+
+  mockData.updates.unshift({
+    time: "Сейчас",
+    title,
+    text,
+  });
+
+  renderUpdates();
+}
+
+function readPhotoAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => resolve(reader.result));
+    reader.addEventListener("error", () => reject(reader.error));
+    reader.readAsDataURL(file);
+  });
+}
+
 function getPhotoTheme(text) {
   const normalizedText = text.toLowerCase();
 
@@ -1019,9 +1121,16 @@ function renderPhotoReport() {
     preview.className = `photo-preview is-${getPhotoTheme(`${photo.title} ${photo.stage}`)}`;
     preview.setAttribute("aria-hidden", "true");
 
-    const previewLabel = document.createElement("span");
-    previewLabel.textContent = getPhotoLabel(`${photo.title} ${photo.stage}`);
-    preview.append(previewLabel);
+    if (photo.imageUrl) {
+      const previewImage = document.createElement("img");
+      previewImage.src = photo.imageUrl;
+      previewImage.alt = "";
+      preview.append(previewImage);
+    } else {
+      const previewLabel = document.createElement("span");
+      previewLabel.textContent = getPhotoLabel(`${photo.title} ${photo.stage}`);
+      preview.append(previewLabel);
+    }
 
     const content = document.createElement("div");
     content.className = "photo-card-content";
@@ -1152,6 +1261,87 @@ function updateSummary() {
   }
 }
 
+async function handlePhotoUpload(event) {
+  event.preventDefault();
+
+  const file = photoFileInput?.files?.[0];
+  const title = photoTitleInput?.value.trim();
+  const stage = photoStageInput?.value || "Объект";
+  const comment = photoCommentInput?.value.trim();
+
+  if (!file || !title) {
+    if (photoUploadStatus) {
+      photoUploadStatus.textContent = "Выберите фото и добавьте подпись.";
+    }
+    return;
+  }
+
+  let imageUrl = "";
+
+  try {
+    imageUrl = await readPhotoAsDataUrl(file);
+  } catch {
+    if (photoUploadStatus) {
+      photoUploadStatus.textContent = "Не удалось прочитать выбранное фото.";
+    }
+    return;
+  }
+
+  mockData.photos.unshift({
+    imageUrl,
+    stage,
+    status: "Добавлено прорабом",
+    text: comment || "Фото добавлено в отчет по текущему объекту.",
+    title,
+    tone: "progress",
+  });
+
+  addObjectUpdate("Добавлено новое фото", `${stage}: ${title}`);
+  const isSaved = saveProjectData();
+  renderPhotoReport();
+  photoUploadForm.reset();
+
+  if (photoUploadStatus) {
+    photoUploadStatus.textContent = isSaved
+      ? "Фото добавлено и сохранено в панели этого объекта."
+      : "Фото добавлено на экран, но браузер не смог сохранить его после перезагрузки.";
+  }
+}
+
+function handleIssueSubmit(event) {
+  event.preventDefault();
+
+  const title = issueTitleInput?.value.trim();
+  const text = issueTextInput?.value.trim();
+  const status = issueStatusInput?.value || "new";
+
+  if (!title || !text) {
+    if (issueFormStatus) {
+      issueFormStatus.textContent = "Заполните тему и описание правки.";
+    }
+    return;
+  }
+
+  mockData.issues.unshift({
+    status,
+    statusText: getIssueStatusText(status),
+    text,
+    title,
+  });
+
+  setIssueFilter("all");
+  addObjectUpdate("Добавлена правка", title);
+  const isSaved = saveProjectData();
+  renderIssues();
+  issueForm.reset();
+
+  if (issueFormStatus) {
+    issueFormStatus.textContent = isSaved
+      ? "Правка добавлена и сохранена в панели."
+      : "Правка добавлена на экран, но браузер не смог сохранить ее после перезагрузки.";
+  }
+}
+
 stateButtons.forEach((button) => {
   button.addEventListener("click", () => setState(button.dataset.stateButton));
 });
@@ -1172,17 +1362,13 @@ stageFilterButtons.forEach((button) => {
 
 issueFilterButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    activeIssueFilter = button.dataset.issueFilter || "all";
-
-    issueFilterButtons.forEach((filterButton) => {
-      const isActive = filterButton === button;
-      filterButton.classList.toggle("is-active", isActive);
-      filterButton.setAttribute("aria-pressed", String(isActive));
-    });
-
+    setIssueFilter(button.dataset.issueFilter || "all");
     renderIssues();
   });
 });
+
+photoUploadForm?.addEventListener("submit", handlePhotoUpload);
+issueForm?.addEventListener("submit", handleIssueSubmit);
 
 renderObjectMenu();
 renderPanel();
