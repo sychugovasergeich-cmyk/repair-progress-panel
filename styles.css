@@ -70,6 +70,7 @@ p {
 .progress-panel,
   .state-checker,
   .summary-grid article,
+  .object-passport,
   .workspace,
   .photo-report,
   .next-actions,
@@ -287,6 +288,44 @@ h3 {
   margin-bottom: 0;
   color: var(--muted);
   line-height: 1.45;
+}
+
+.object-passport {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 18px;
+  padding: 22px;
+}
+
+.passport-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.passport-item {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel-soft);
+}
+
+.passport-item dt {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.passport-item dd {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 900;
+  line-height: 1.35;
 }
 
 .workspace {
@@ -739,6 +778,7 @@ h3 {
 }
 
 body[data-view-state="empty"] .summary-grid,
+body[data-view-state="empty"] .object-passport,
 body[data-view-state="empty"] .stages-grid,
 body[data-view-state="empty"] .photo-report,
 body[data-view-state="empty"] .next-actions,
@@ -760,6 +800,7 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
 @media (max-width: 900px) {
   .hero,
   .summary-grid,
+  .object-passport,
   .photo-report-grid,
   .actions-list,
   .details-grid,
@@ -780,6 +821,10 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
   .state-checker summary strong {
     text-align: left;
   }
+
+  .passport-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 560px) {
@@ -790,6 +835,7 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
 
   .hero-copy,
   .progress-panel,
+  .object-passport,
   .workspace,
   .photo-report,
   .next-actions,
@@ -836,6 +882,10 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
 
   .stage-filters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .passport-list {
+    grid-template-columns: 1fr;
   }
 
   .state-buttons button,

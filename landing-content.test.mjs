@@ -10,6 +10,9 @@ const requiredHtml = [
   "Панель прораба",
   "Ремонт квартиры",
   "62% готово",
+  "Паспорт ремонта",
+  'id="objectPassport"',
+  'id="passportList"',
   "Фотоотчет",
   "Фото по объекту",
   'id="photoReport"',
@@ -55,6 +58,10 @@ assert.ok(app.includes("Этапы ремонта пока не добавлен
 assert.ok(app.includes("Не удалось показать данные этапа"));
 assert.ok(app.includes("Этап завершён"));
 assert.ok(app.includes("const mockData"));
+assert.ok(app.includes("passport"));
+assert.ok(app.includes("Учебный объект, без реального адреса"));
+assert.ok(app.includes("Сантехника и фото кухни"));
+assert.ok(app.includes("renderPassport"));
 assert.ok(app.includes("photos"));
 assert.ok(app.includes("Кухня перед закрытием стен"));
 assert.ok(app.includes("Сантехнические выводы"));

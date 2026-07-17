@@ -1,6 +1,7 @@
 const stateButtons = [...document.querySelectorAll("[data-state-button]")];
 const stateMessage = document.querySelector("#stateMessage");
 const stagesGrid = document.querySelector("#stagesGrid");
+const passportList = document.querySelector("#passportList");
 const chatMessages = document.querySelector("#chatMessages");
 const issuesList = document.querySelector("#issuesList");
 const photoReportGrid = document.querySelector("#photoReportGrid");
@@ -12,6 +13,24 @@ let activeIssueFilter = "all";
 
 const mockData = {
   objectName: "Ремонт квартиры",
+  passport: [
+    {
+      label: "Адрес",
+      value: "Учебный объект, без реального адреса",
+    },
+    {
+      label: "Срок",
+      value: "18 июня - 12 июля",
+    },
+    {
+      label: "Текущий фокус",
+      value: "Сантехника и фото кухни",
+    },
+    {
+      label: "Ответственный",
+      value: "Прораб Алексей",
+    },
+  ],
   photos: [
     {
       title: "Кухня перед закрытием стен",
@@ -200,6 +219,28 @@ function renderChat() {
     meta.append(author, time);
     item.append(meta, text);
     chatMessages.append(item);
+  });
+}
+
+function renderPassport() {
+  if (!passportList) {
+    return;
+  }
+
+  passportList.innerHTML = "";
+
+  mockData.passport.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "passport-item";
+
+    const label = document.createElement("dt");
+    label.textContent = item.label;
+
+    const value = document.createElement("dd");
+    value.textContent = item.value;
+
+    row.append(label, value);
+    passportList.append(row);
   });
 }
 
@@ -425,6 +466,7 @@ issueFilterButtons.forEach((button) => {
 });
 
 renderIssues();
+renderPassport();
 renderChat();
 renderStages();
 renderPhotoReport();
