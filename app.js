@@ -3,11 +3,35 @@ const stateMessage = document.querySelector("#stateMessage");
 const stagesGrid = document.querySelector("#stagesGrid");
 const chatMessages = document.querySelector("#chatMessages");
 const issuesList = document.querySelector("#issuesList");
+const photoReportGrid = document.querySelector("#photoReportGrid");
 const issueFilterButtons = [...document.querySelectorAll("[data-issue-filter]")];
 let activeIssueFilter = "all";
 
 const mockData = {
   objectName: "Ремонт квартиры",
+  photos: [
+    {
+      title: "Кухня перед закрытием стен",
+      stage: "Электрика",
+      status: "Нужно показать",
+      tone: "attention",
+      text: "Фото нужно добавить в следующий отчет по просьбе заказчика.",
+    },
+    {
+      title: "Сантехнические выводы",
+      stage: "Сантехника",
+      status: "На проверке",
+      tone: "progress",
+      text: "Соединения собраны, завтра прораб фиксирует результат.",
+    },
+    {
+      title: "Демонтаж после вывоза мусора",
+      stage: "Демонтаж",
+      status: "Принято",
+      tone: "done",
+      text: "Зона очищена, этап закрыт без дополнительных вопросов.",
+    },
+  ],
   issues: [
     {
       title: "Розетка у рабочего стола",
@@ -239,6 +263,47 @@ function renderStages() {
   });
 }
 
+function renderPhotoReport() {
+  if (!photoReportGrid) {
+    return;
+  }
+
+  photoReportGrid.innerHTML = "";
+
+  mockData.photos.forEach((photo) => {
+    const card = document.createElement("article");
+    card.className = `photo-card is-${photo.tone}`;
+
+    const preview = document.createElement("div");
+    preview.className = "photo-preview";
+    preview.setAttribute("aria-hidden", "true");
+
+    const previewLabel = document.createElement("span");
+    previewLabel.textContent = "Фото";
+    preview.append(previewLabel);
+
+    const content = document.createElement("div");
+    content.className = "photo-card-content";
+
+    const meta = document.createElement("span");
+    meta.className = "photo-meta";
+    meta.textContent = photo.stage;
+
+    const title = document.createElement("h3");
+    title.textContent = photo.title;
+
+    const status = document.createElement("strong");
+    status.textContent = photo.status;
+
+    const text = document.createElement("p");
+    text.textContent = photo.text;
+
+    content.append(meta, title, status, text);
+    card.append(preview, content);
+    photoReportGrid.append(card);
+  });
+}
+
 function updateSummary() {
   const done = mockData.stages.filter((s) => s.status === "done").length;
   const active = mockData.stages.filter((s) => s.status === "active").length;
@@ -280,5 +345,6 @@ issueFilterButtons.forEach((button) => {
 renderIssues();
 renderChat();
 renderStages();
+renderPhotoReport();
 updateSummary();
 setState("filled");

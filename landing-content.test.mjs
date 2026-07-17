@@ -10,6 +10,10 @@ const requiredHtml = [
   "Панель прораба",
   "Ремонт квартиры",
   "62% готово",
+  "Фотоотчет",
+  "Фото по объекту",
+  'id="photoReport"',
+  'id="photoReportGrid"',
   "Замечание заказчика",
   "Замечания",
   "Что требует внимания",
@@ -44,6 +48,11 @@ assert.ok(app.includes("Этапы ремонта пока не добавлен
 assert.ok(app.includes("Не удалось показать данные этапа"));
 assert.ok(app.includes("Этап завершён"));
 assert.ok(app.includes("const mockData"));
+assert.ok(app.includes("photos"));
+assert.ok(app.includes("Кухня перед закрытием стен"));
+assert.ok(app.includes("Сантехнические выводы"));
+assert.ok(app.includes("Демонтаж после вывоза мусора"));
+assert.ok(app.includes("renderPhotoReport"));
 assert.ok(app.includes("issues"));
 assert.ok(app.includes("Розетка у рабочего стола"));
 assert.ok(app.includes("Фото кухни перед приемкой"));
