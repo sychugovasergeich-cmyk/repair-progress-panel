@@ -8,23 +8,31 @@
   </head>
   <body data-page="repair-progress-panel">
     <main class="app-shell">
+      <section class="object-selector" aria-labelledby="objectSelectorTitle">
+        <div>
+          <p class="eyebrow">Объекты</p>
+          <h2 id="objectSelectorTitle">Выберите объект</h2>
+        </div>
+        <ul class="object-list" id="objectList" aria-label="Список объектов ремонта"></ul>
+      </section>
+
       <section class="hero" aria-labelledby="pageTitle">
         <div class="hero-copy">
           <p class="eyebrow">Учебный прототип</p>
           <h1 id="pageTitle">Панель прораба</h1>
-          <p class="hero-text">
+          <p class="hero-text" id="heroText">
             Ремонт квартиры: спокойный экран для показа заказчику, что уже сделано,
             что сейчас в работе и где есть замечания.
           </p>
         </div>
 
         <aside class="progress-panel" aria-label="Общий прогресс">
-          <span class="object-label">Ремонт квартиры</span>
-          <strong>62% готово</strong>
+          <span class="object-label" id="objectLabel">Ремонт квартиры</span>
+          <strong id="progressValue">62% готово</strong>
           <div class="progress-track" aria-hidden="true">
-            <span></span>
+            <span id="progressBar"></span>
           </div>
-          <p>Сейчас в фокусе: сантехника и подготовка к отделке.</p>
+          <p id="progressFocus">Сейчас в фокусе: сантехника и подготовка к отделке.</p>
         </aside>
       </section>
 
@@ -139,10 +147,10 @@
         <article class="client-note">
           <p class="eyebrow">Связь по объекту</p>
           <h2>Замечание заказчика</h2>
-          <p>
+          <p id="clientNoteText">
             “Пожалуйста, отдельно покажите фото зоны кухни перед закрытием стен.”
           </p>
-          <span>Ответ прораба: добавим фото в следующий отчет.</span>
+          <span id="clientNoteResponse">Ответ прораба: добавим фото в следующий отчет.</span>
         </article>
 
         <article class="issues-panel" id="issuesPanel">

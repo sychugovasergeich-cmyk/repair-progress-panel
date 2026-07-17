@@ -68,6 +68,7 @@ p {
 
 .hero-copy,
 .progress-panel,
+  .object-selector,
   .state-checker,
   .summary-grid article,
   .object-passport,
@@ -90,6 +91,56 @@ p {
 
 .hero-copy {
   padding: 28px;
+}
+
+.object-selector {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 18px;
+  padding: 22px;
+}
+
+.object-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.object-list button {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  min-height: 94px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--panel-soft);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.object-list button.is-active,
+.object-list button:hover {
+  border-color: var(--green);
+  background: var(--soft-green);
+}
+
+.object-list strong {
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.object-list span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
 .eyebrow {
@@ -957,6 +1008,7 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
 
 @media (max-width: 900px) {
   .hero,
+  .object-selector,
   .summary-grid,
   .object-passport,
   .acceptance-list,
@@ -985,6 +1037,10 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
   .passport-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .object-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 560px) {
@@ -995,6 +1051,7 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
 
   .hero-copy,
   .progress-panel,
+  .object-selector,
   .object-passport,
   .acceptance-panel,
   .workspace,

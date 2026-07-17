@@ -1,8 +1,17 @@
 const stateButtons = [...document.querySelectorAll("[data-state-button]")];
+const objectList = document.querySelector("#objectList");
+const pageTitle = document.querySelector("#pageTitle");
+const heroText = document.querySelector("#heroText");
+const objectLabel = document.querySelector("#objectLabel");
+const progressValue = document.querySelector("#progressValue");
+const progressBar = document.querySelector("#progressBar");
+const progressFocus = document.querySelector("#progressFocus");
 const stateMessage = document.querySelector("#stateMessage");
 const stagesGrid = document.querySelector("#stagesGrid");
 const passportList = document.querySelector("#passportList");
 const acceptanceList = document.querySelector("#acceptanceList");
+const clientNoteText = document.querySelector("#clientNoteText");
+const clientNoteResponse = document.querySelector("#clientNoteResponse");
 const chatMessages = document.querySelector("#chatMessages");
 const issuesList = document.querySelector("#issuesList");
 const photoReportGrid = document.querySelector("#photoReportGrid");
@@ -14,12 +23,20 @@ const issueFilterButtons = [...document.querySelectorAll("[data-issue-filter]")]
 let activeStageFilter = "all";
 let activeIssueFilter = "all";
 
-const mockData = {
+const baseObject = {
+  id: "lesnaya-14",
   objectName: "Ремонт квартиры",
+  address: "ул. Лесная, 14",
+  progress: 62,
+  focus: "Сантехника и подготовка к отделке",
+  heroText:
+    "Ремонт квартиры: спокойный экран для показа заказчику, что уже сделано, что сейчас в работе и где есть замечания.",
+  clientNote: "Пожалуйста, отдельно покажите фото зоны кухни перед закрытием стен.",
+  clientResponse: "Ответ прораба: добавим фото в следующий отчет.",
   passport: [
     {
       label: "Адрес",
-      value: "Учебный объект, без реального адреса",
+      value: "Учебный адрес: ул. Лесная, 14",
     },
     {
       label: "Срок",
@@ -215,6 +232,404 @@ const mockData = {
   ],
 };
 
+const projectObjects = [
+  baseObject,
+  {
+    id: "mira-8",
+    objectName: "Ремонт квартиры",
+    address: "пр. Мира, 8",
+    progress: 38,
+    focus: "Черновые работы и согласование электрики",
+    heroText:
+      "Панель показывает ранний этап ремонта: что уже подготовлено, какие решения ждут согласования и что нужно проверить до коммуникаций.",
+    clientNote: "Нужно заранее согласовать расположение розеток в спальне.",
+    clientResponse: "Ответ прораба: схема розеток вынесена в ближайшие действия.",
+    passport: [
+      { label: "Адрес", value: "Учебный адрес: пр. Мира, 8" },
+      { label: "Срок", value: "22 июня - 20 июля" },
+      { label: "Текущий фокус", value: "Черновые работы и электрика" },
+      { label: "Ответственный", value: "Прораб Илья" },
+    ],
+    acceptance: [
+      {
+        title: "Демонтаж можно показывать",
+        status: "ready",
+        statusText: "Готово",
+        text: "Помещение освобождено и подготовлено к черновому этапу.",
+      },
+      {
+        title: "Схема электрики требует решения",
+        status: "progress",
+        statusText: "В работе",
+        text: "Нужно подтвердить розетки в спальне и зоне кухни.",
+      },
+      {
+        title: "Отделка еще не готова к старту",
+        status: "waiting",
+        statusText: "Ожидает",
+        text: "Сначала закрываем черновые работы и коммуникации.",
+      },
+    ],
+    photos: [
+      {
+        title: "Комната после демонтажа",
+        stage: "Демонтаж",
+        status: "Принято",
+        tone: "done",
+        text: "Старые покрытия сняты, зона готова к черновым работам.",
+      },
+      {
+        title: "Стены перед выравниванием",
+        stage: "Черновые работы",
+        status: "На проверке",
+        tone: "progress",
+        text: "Прораб проверяет поверхности перед следующим слоем.",
+      },
+      {
+        title: "Зона будущей электрики",
+        stage: "Электрика",
+        status: "Нужно согласовать",
+        tone: "attention",
+        text: "Точки розеток нужно подтвердить до штробления.",
+      },
+    ],
+    actions: [
+      {
+        title: "Согласовать схему розеток",
+        date: "Сегодня до 17:00",
+        owner: "Прораб",
+        link: "Связано с замечанием заказчика",
+      },
+      {
+        title: "Закончить выравнивание стен",
+        date: "Завтра",
+        owner: "Мастер",
+        link: "После этого можно переходить к коммуникациям",
+      },
+      {
+        title: "Подготовить фото чернового этапа",
+        date: "После проверки стен",
+        owner: "Прораб",
+        link: "Фото попадет в следующий отчет",
+      },
+    ],
+    updates: [
+      {
+        date: "27 июня",
+        title: "Добавлено замечание по розеткам",
+        text: "Заказчик просит согласовать точки в спальне.",
+      },
+      {
+        date: "25 июня",
+        title: "Начаты черновые работы",
+        text: "Стены готовятся к выравниванию и проверке поверхностей.",
+      },
+      {
+        date: "22 июня",
+        title: "Демонтаж завершен",
+        text: "Объект очищен, мусор вывезен.",
+      },
+    ],
+    clientSummary: [
+      {
+        label: "Общий статус",
+        title: "Ремонт на раннем этапе",
+        text: "Завершен демонтаж, черновые работы идут по плану.",
+      },
+      {
+        label: "Что важно",
+        title: "Нужно согласовать электрику",
+        text: "Без схемы розеток нельзя уверенно продолжать штробление.",
+      },
+      {
+        label: "Следующий шаг",
+        title: "Закрыть черновой этап",
+        text: "После проверки стен можно готовить коммуникации.",
+      },
+    ],
+    issues: [
+      {
+        title: "Розетки в спальне",
+        status: "new",
+        statusText: "Новое",
+        text: "Заказчик хочет увидеть схему до начала электрики.",
+      },
+      {
+        title: "Проверка стен",
+        status: "progress",
+        statusText: "В работе",
+        text: "Мастер проверяет перепады перед выравниванием.",
+      },
+      {
+        title: "Вывоз старых покрытий",
+        status: "closed",
+        statusText: "Закрыто",
+        text: "Демонтажный мусор вывезен, зона свободна.",
+      },
+    ],
+    messages: [
+      {
+        author: "Заказчик",
+        role: "client",
+        time: "27 июня, 11:10",
+        text: "Покажите, где будут розетки в спальне.",
+      },
+      {
+        author: "Прораб",
+        role: "foreman",
+        time: "27 июня, 11:25",
+        text: "Подготовим схему и добавим ее в ближайший отчет.",
+      },
+      {
+        author: "Прораб",
+        role: "foreman",
+        time: "27 июня, 16:40",
+        text: "Черновые работы идут по графику, стены проверяем завтра.",
+      },
+    ],
+    stages: [
+      {
+        id: "demontazh",
+        title: "Демонтаж",
+        status: "done",
+        statusText: "Завершено",
+        date: "Обновлено: 22 июня",
+        comment: "старые покрытия сняты, мусор вывезен.",
+      },
+      {
+        id: "chernye-raboty",
+        title: "Черновые работы",
+        status: "active",
+        statusText: "В работе",
+        date: "Обновлено: 25 июня",
+        comment: "стены готовятся к выравниванию и проверке поверхностей.",
+      },
+      {
+        id: "elektrika",
+        title: "Электрика",
+        status: "waiting",
+        statusText: "Ожидает",
+        date: "План: после схемы розеток",
+        comment: "нужно согласовать точки перед началом работ.",
+      },
+      {
+        id: "santehnika",
+        title: "Сантехника",
+        status: "waiting",
+        statusText: "Ожидает",
+        date: "План: после черновых работ",
+        comment: "этап начнется после подготовки стен.",
+      },
+      {
+        id: "otdelochnye-raboty",
+        title: "Отделочные работы",
+        status: "waiting",
+        statusText: "Ожидает",
+        date: "План: после коммуникаций",
+        comment: "отделку пока не запускаем.",
+      },
+    ],
+  },
+  {
+    id: "sadovaya-3",
+    objectName: "Ремонт квартиры",
+    address: "ул. Садовая, 3",
+    progress: 78,
+    focus: "Финишная отделка и приемка комнат",
+    heroText:
+      "Панель показывает объект на поздней стадии: большая часть работ закрыта, остались отделка и финальные замечания.",
+    clientNote: "Проверьте оттенок краски в гостиной при дневном свете.",
+    clientResponse: "Ответ прораба: добавим фото гостиной утром и отметим результат.",
+    passport: [
+      { label: "Адрес", value: "Учебный адрес: ул. Садовая, 3" },
+      { label: "Срок", value: "10 июня - 5 июля" },
+      { label: "Текущий фокус", value: "Отделка и приемка" },
+      { label: "Ответственный", value: "Прораб Марина" },
+    ],
+    acceptance: [
+      {
+        title: "Коммуникации приняты",
+        status: "ready",
+        statusText: "Готово",
+        text: "Электрика и сантехника закрыты без новых вопросов.",
+      },
+      {
+        title: "Отделка почти завершена",
+        status: "progress",
+        statusText: "В работе",
+        text: "Осталось проверить оттенок краски и плинтусы.",
+      },
+      {
+        title: "Финальная уборка ожидает",
+        status: "waiting",
+        statusText: "Ожидает",
+        text: "Запускается после закрытия отделочных замечаний.",
+      },
+    ],
+    photos: [
+      {
+        title: "Гостиная после покраски",
+        stage: "Отделочные работы",
+        status: "Нужно показать",
+        tone: "attention",
+        text: "Фото нужно сделать утром при дневном свете.",
+      },
+      {
+        title: "Санузел после монтажа",
+        stage: "Сантехника",
+        status: "Принято",
+        tone: "done",
+        text: "Сантехнический этап принят без дополнительных вопросов.",
+      },
+      {
+        title: "Коридор перед плинтусами",
+        stage: "Отделочные работы",
+        status: "На проверке",
+        tone: "progress",
+        text: "Мастер готовит зону к финальному проходу.",
+      },
+    ],
+    actions: [
+      {
+        title: "Сделать фото гостиной утром",
+        date: "Завтра до 11:00",
+        owner: "Прораб",
+        link: "Связано с замечанием по краске",
+      },
+      {
+        title: "Проверить плинтусы в коридоре",
+        date: "Сегодня",
+        owner: "Мастер",
+        link: "Финальная проверка отделки",
+      },
+      {
+        title: "Назначить приемку объекта",
+        date: "После закрытия замечаний",
+        owner: "Прораб и заказчик",
+        link: "Финальный показ квартиры",
+      },
+    ],
+    updates: [
+      {
+        date: "28 июня",
+        title: "Отделка перешла к финальной проверке",
+        text: "Остались плинтусы и фото гостиной.",
+      },
+      {
+        date: "26 июня",
+        title: "Сантехника принята",
+        text: "Соединения проверены, замечаний нет.",
+      },
+      {
+        date: "24 июня",
+        title: "Электрика закрыта",
+        text: "Группы розеток и освещения проверены.",
+      },
+    ],
+    clientSummary: [
+      {
+        label: "Общий статус",
+        title: "Объект близок к приемке",
+        text: "Основные этапы закрыты, идет финальная отделка.",
+      },
+      {
+        label: "Что важно",
+        title: "Проверить цвет гостиной",
+        text: "Фото нужно сделать при дневном свете перед финальным решением.",
+      },
+      {
+        label: "Следующий шаг",
+        title: "Закрыть отделочные мелочи",
+        text: "После этого можно назначать приемку объекта.",
+      },
+    ],
+    issues: [
+      {
+        title: "Оттенок краски в гостиной",
+        status: "new",
+        statusText: "Новое",
+        text: "Заказчик просит фото при дневном освещении.",
+      },
+      {
+        title: "Плинтусы в коридоре",
+        status: "progress",
+        statusText: "В работе",
+        text: "Мастер проверяет стыки перед финальным отчетом.",
+      },
+      {
+        title: "Проверка сантехники",
+        status: "closed",
+        statusText: "Закрыто",
+        text: "Санузел принят, замечаний нет.",
+      },
+    ],
+    messages: [
+      {
+        author: "Заказчик",
+        role: "client",
+        time: "28 июня, 09:40",
+        text: "Нужно увидеть цвет гостиной при дневном свете.",
+      },
+      {
+        author: "Прораб",
+        role: "foreman",
+        time: "28 июня, 10:05",
+        text: "Сделаем фото завтра утром и добавим в отчет.",
+      },
+      {
+        author: "Прораб",
+        role: "foreman",
+        time: "28 июня, 17:30",
+        text: "Сантехника и электрика закрыты, проверяем отделочные детали.",
+      },
+    ],
+    stages: [
+      {
+        id: "demontazh",
+        title: "Демонтаж",
+        status: "done",
+        statusText: "Завершено",
+        date: "Обновлено: 12 июня",
+        comment: "помещение подготовлено к ремонту.",
+      },
+      {
+        id: "chernye-raboty",
+        title: "Черновые работы",
+        status: "done",
+        statusText: "Завершено",
+        date: "Обновлено: 18 июня",
+        comment: "стены и поверхности подготовлены.",
+      },
+      {
+        id: "elektrika",
+        title: "Электрика",
+        status: "done",
+        statusText: "Завершено",
+        date: "Обновлено: 24 июня",
+        comment: "линии и группы розеток проверены.",
+      },
+      {
+        id: "santehnika",
+        title: "Сантехника",
+        status: "done",
+        statusText: "Завершено",
+        date: "Обновлено: 26 июня",
+        comment: "соединения проверены, этап принят.",
+      },
+      {
+        id: "otdelochnye-raboty",
+        title: "Отделочные работы",
+        status: "active",
+        statusText: "В работе",
+        date: "Обновлено: 28 июня",
+        comment: "остались плинтусы и проверка цвета гостиной.",
+      },
+    ],
+  },
+];
+
+let mockData = projectObjects[0];
+
 const stateCopy = {
   filled: {
     text: "Данные по этапам показаны.",
@@ -248,6 +663,129 @@ function setState(nextState) {
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
   });
+}
+
+function setActiveButton(buttons, activeButton, dataName) {
+  buttons.forEach((button) => {
+    const isActive = button === activeButton;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+
+    if (isActive && dataName) {
+      return button.dataset[dataName];
+    }
+
+    return undefined;
+  });
+}
+
+function updatePageHeader() {
+  if (pageTitle) {
+    pageTitle.textContent = `Панель прораба ${mockData.address}`;
+  }
+
+  if (heroText) {
+    heroText.textContent = mockData.heroText;
+  }
+
+  if (objectLabel) {
+    objectLabel.textContent = mockData.objectName;
+  }
+
+  if (progressValue) {
+    progressValue.textContent = `${mockData.progress}% готово`;
+  }
+
+  if (progressBar) {
+    progressBar.style.width = `${mockData.progress}%`;
+  }
+
+  if (progressFocus) {
+    progressFocus.textContent = `Сейчас в фокусе: ${mockData.focus}.`;
+  }
+
+  if (clientNoteText) {
+    clientNoteText.textContent = `“${mockData.clientNote}”`;
+  }
+
+  if (clientNoteResponse) {
+    clientNoteResponse.textContent = mockData.clientResponse;
+  }
+}
+
+function renderObjectMenu() {
+  if (!objectList) {
+    return;
+  }
+
+  objectList.innerHTML = "";
+
+  projectObjects.forEach((object) => {
+    const item = document.createElement("li");
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.objectId = object.id;
+    button.className = object.id === mockData.id ? "is-active" : "";
+    button.setAttribute("aria-pressed", String(object.id === mockData.id));
+
+    const title = document.createElement("strong");
+    title.textContent = `Панель прораба ${object.address}`;
+
+    const meta = document.createElement("span");
+    meta.textContent = `${object.progress}% готово · ${object.focus}`;
+
+    button.append(title, meta);
+    button.addEventListener("click", () => setActiveObject(object.id));
+
+    item.append(button);
+    objectList.append(item);
+  });
+}
+
+function resetFilters() {
+  activeStageFilter = "all";
+  activeIssueFilter = "all";
+
+  stageFilterButtons.forEach((button) => {
+    const isActive = button.dataset.stageFilter === "all";
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  issueFilterButtons.forEach((button) => {
+    const isActive = button.dataset.issueFilter === "all";
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function renderPanel() {
+  updatePageHeader();
+  renderIssues();
+  renderPassport();
+  renderAcceptance();
+  renderChat();
+  renderStages();
+  renderPhotoReport();
+  renderActions();
+  renderUpdates();
+  renderClientSummary();
+  updateSummary();
+  setState("filled");
+}
+
+function setActiveObject(objectId) {
+  const nextObject = projectObjects.find((object) => object.id === objectId);
+
+  if (!nextObject) {
+    return;
+  }
+
+  mockData = nextObject;
+  resetFilters();
+  renderObjectMenu();
+  renderPanel();
 }
 
 function renderChat() {
@@ -606,14 +1144,5 @@ issueFilterButtons.forEach((button) => {
   });
 });
 
-renderIssues();
-renderPassport();
-renderAcceptance();
-renderChat();
-renderStages();
-renderPhotoReport();
-renderActions();
-renderUpdates();
-renderClientSummary();
-updateSummary();
-setState("filled");
+renderObjectMenu();
+renderPanel();

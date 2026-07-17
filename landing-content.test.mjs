@@ -8,6 +8,8 @@ const requiredHtml = [
   'data-page="repair-progress-panel"',
   "<title>Панель прораба: ремонт квартиры</title>",
   "Панель прораба",
+  "Выберите объект",
+  'id="objectList"',
   "Ремонт квартиры",
   "62% готово",
   "Паспорт ремонта",
@@ -66,9 +68,16 @@ assert.ok(app.includes("stage-card"));
 assert.ok(app.includes("Этапы ремонта пока не добавлены"));
 assert.ok(app.includes("Не удалось показать данные этапа"));
 assert.ok(app.includes("Этап завершён"));
-assert.ok(app.includes("const mockData"));
+assert.ok(app.includes("projectObjects"));
+assert.ok(app.includes("let mockData"));
+assert.ok(app.includes("setActiveObject"));
+assert.ok(app.includes("renderObjectMenu"));
+assert.ok(app.includes("Панель прораба ${object.address}"));
+assert.ok(app.includes("ул. Лесная, 14"));
+assert.ok(app.includes("пр. Мира, 8"));
+assert.ok(app.includes("ул. Садовая, 3"));
 assert.ok(app.includes("passport"));
-assert.ok(app.includes("Учебный объект, без реального адреса"));
+assert.ok(app.includes("Учебный адрес: ул. Лесная, 14"));
 assert.ok(app.includes("Сантехника и фото кухни"));
 assert.ok(app.includes("renderPassport"));
 assert.ok(app.includes("acceptance"));
