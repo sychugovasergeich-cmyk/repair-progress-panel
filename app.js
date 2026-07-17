@@ -5,7 +5,9 @@ const chatMessages = document.querySelector("#chatMessages");
 const issuesList = document.querySelector("#issuesList");
 const photoReportGrid = document.querySelector("#photoReportGrid");
 const actionsList = document.querySelector("#actionsList");
+const stageFilterButtons = [...document.querySelectorAll("[data-stage-filter]")];
 const issueFilterButtons = [...document.querySelectorAll("[data-issue-filter]")];
+let activeStageFilter = "all";
 let activeIssueFilter = "all";
 
 const mockData = {
@@ -250,7 +252,19 @@ function renderStages() {
 
   stagesGrid.innerHTML = "";
 
-  mockData.stages.forEach((stage) => {
+  const visibleStages = mockData.stages.filter((stage) => {
+    return activeStageFilter === "all" || stage.status === activeStageFilter;
+  });
+
+  if (visibleStages.length === 0) {
+    const emptyCard = document.createElement("article");
+    emptyCard.className = "stage-card is-empty";
+    emptyCard.textContent = "Этапов с таким статусом нет.";
+    stagesGrid.append(emptyCard);
+    return;
+  }
+
+  visibleStages.forEach((stage) => {
     const card = document.createElement("article");
     card.className = `stage-card is-${stage.status}`;
 
@@ -380,6 +394,20 @@ function updateSummary() {
 
 stateButtons.forEach((button) => {
   button.addEventListener("click", () => setState(button.dataset.stateButton));
+});
+
+stageFilterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    activeStageFilter = button.dataset.stageFilter || "all";
+
+    stageFilterButtons.forEach((filterButton) => {
+      const isActive = filterButton === button;
+      filterButton.classList.toggle("is-active", isActive);
+      filterButton.setAttribute("aria-pressed", String(isActive));
+    });
+
+    renderStages();
+  });
 });
 
 issueFilterButtons.forEach((button) => {

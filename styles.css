@@ -308,6 +308,32 @@ h3 {
   margin-bottom: 18px;
 }
 
+.stage-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.stage-filters button {
+  min-width: 0;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: var(--panel-soft);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.stage-filters button.is-active,
+.stage-filters button:hover {
+  border-color: var(--green);
+  background: var(--soft-green);
+  color: var(--green-dark);
+}
+
 .stages-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -328,6 +354,13 @@ h3 {
 
 .stage-card.is-hidden {
   display: none;
+}
+
+.stage-card.is-empty {
+  display: block;
+  min-height: auto;
+  color: var(--muted);
+  font-weight: 800;
 }
 
 .photo-placeholder {
@@ -801,7 +834,12 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .state-buttons button {
+  .stage-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .state-buttons button,
+  .stage-filters button {
     min-width: 0;
     padding: 0 8px;
     font-size: 14px;

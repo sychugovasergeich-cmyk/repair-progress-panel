@@ -35,6 +35,10 @@ const requiredHtml = [
   'data-state-button="empty"',
   'data-state-button="error"',
   'data-state-button="success"',
+  'data-stage-filter="all"',
+  'data-stage-filter="done"',
+  'data-stage-filter="active"',
+  'data-stage-filter="waiting"',
   'id="stagesGrid"',
   'id="stateMessage"',
   'data-summary="done"',
@@ -71,6 +75,9 @@ assert.ok(app.includes("issueFilterButtons"));
 assert.ok(app.includes("Замечаний с таким статусом нет."));
 assert.ok(app.includes("messages"));
 assert.ok(app.includes("stages"));
+assert.ok(app.includes("activeStageFilter"));
+assert.ok(app.includes("stageFilterButtons"));
+assert.ok(app.includes("Этапов с таким статусом нет."));
 assert.ok(app.includes("Покажите фото зоны кухни"));
 assert.ok(app.includes("Фото добавим в следующий отчет"));
 assert.ok(app.includes("Демонтаж"));
