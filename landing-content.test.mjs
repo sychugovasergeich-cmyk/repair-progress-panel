@@ -13,6 +13,9 @@ const requiredHtml = [
   "Паспорт ремонта",
   'id="objectPassport"',
   'id="passportList"',
+  "Готовность к показу заказчику",
+  'id="acceptancePanel"',
+  'id="acceptanceList"',
   "Фотоотчет",
   "Фото по объекту",
   'id="photoReport"',
@@ -62,6 +65,11 @@ assert.ok(app.includes("passport"));
 assert.ok(app.includes("Учебный объект, без реального адреса"));
 assert.ok(app.includes("Сантехника и фото кухни"));
 assert.ok(app.includes("renderPassport"));
+assert.ok(app.includes("acceptance"));
+assert.ok(app.includes("Черновые работы можно показывать"));
+assert.ok(app.includes("Фото кухни нужно добавить"));
+assert.ok(app.includes("Отделку пока не начинать"));
+assert.ok(app.includes("renderAcceptance"));
 assert.ok(app.includes("photos"));
 assert.ok(app.includes("Кухня перед закрытием стен"));
 assert.ok(app.includes("Сантехнические выводы"));

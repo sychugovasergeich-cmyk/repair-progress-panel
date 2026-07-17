@@ -71,6 +71,7 @@ p {
   .state-checker,
   .summary-grid article,
   .object-passport,
+  .acceptance-panel,
   .workspace,
   .photo-report,
   .next-actions,
@@ -326,6 +327,70 @@ h3 {
   color: var(--ink);
   font-weight: 900;
   line-height: 1.35;
+}
+
+.acceptance-panel {
+  margin-bottom: 18px;
+  padding: 22px;
+}
+
+.acceptance-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.acceptance-item {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--panel-soft);
+}
+
+.acceptance-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 28px;
+  border-radius: 999px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.acceptance-item.is-ready .acceptance-marker {
+  background: var(--soft-green);
+  color: var(--green-dark);
+}
+
+.acceptance-item.is-progress .acceptance-marker {
+  background: var(--soft-blue);
+  color: var(--blue);
+}
+
+.acceptance-item.is-waiting .acceptance-marker {
+  background: var(--soft-amber);
+  color: #765018;
+}
+
+.acceptance-content strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.acceptance-content p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 .workspace {
@@ -779,6 +844,7 @@ h3 {
 
 body[data-view-state="empty"] .summary-grid,
 body[data-view-state="empty"] .object-passport,
+body[data-view-state="empty"] .acceptance-panel,
 body[data-view-state="empty"] .stages-grid,
 body[data-view-state="empty"] .photo-report,
 body[data-view-state="empty"] .next-actions,
@@ -801,6 +867,7 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
   .hero,
   .summary-grid,
   .object-passport,
+  .acceptance-list,
   .photo-report-grid,
   .actions-list,
   .details-grid,
@@ -836,6 +903,7 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
   .hero-copy,
   .progress-panel,
   .object-passport,
+  .acceptance-panel,
   .workspace,
   .photo-report,
   .next-actions,

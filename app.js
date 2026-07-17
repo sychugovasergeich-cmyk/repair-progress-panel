@@ -2,6 +2,7 @@ const stateButtons = [...document.querySelectorAll("[data-state-button]")];
 const stateMessage = document.querySelector("#stateMessage");
 const stagesGrid = document.querySelector("#stagesGrid");
 const passportList = document.querySelector("#passportList");
+const acceptanceList = document.querySelector("#acceptanceList");
 const chatMessages = document.querySelector("#chatMessages");
 const issuesList = document.querySelector("#issuesList");
 const photoReportGrid = document.querySelector("#photoReportGrid");
@@ -29,6 +30,26 @@ const mockData = {
     {
       label: "Ответственный",
       value: "Прораб Алексей",
+    },
+  ],
+  acceptance: [
+    {
+      title: "Черновые работы можно показывать",
+      status: "ready",
+      statusText: "Готово",
+      text: "Демонтаж и подготовка поверхностей закрыты.",
+    },
+    {
+      title: "Фото кухни нужно добавить",
+      status: "progress",
+      statusText: "В работе",
+      text: "Это главный пункт перед следующим отчетом заказчику.",
+    },
+    {
+      title: "Отделку пока не начинать",
+      status: "waiting",
+      statusText: "Ожидает",
+      text: "Ждем приемку электрики и сантехники.",
     },
   ],
   photos: [
@@ -241,6 +262,36 @@ function renderPassport() {
 
     row.append(label, value);
     passportList.append(row);
+  });
+}
+
+function renderAcceptance() {
+  if (!acceptanceList) {
+    return;
+  }
+
+  acceptanceList.innerHTML = "";
+
+  mockData.acceptance.forEach((item) => {
+    const row = document.createElement("li");
+    row.className = `acceptance-item is-${item.status}`;
+
+    const marker = document.createElement("span");
+    marker.className = "acceptance-marker";
+    marker.textContent = item.statusText;
+
+    const content = document.createElement("div");
+    content.className = "acceptance-content";
+
+    const title = document.createElement("strong");
+    title.textContent = item.title;
+
+    const text = document.createElement("p");
+    text.textContent = item.text;
+
+    content.append(title, text);
+    row.append(marker, content);
+    acceptanceList.append(row);
   });
 }
 
@@ -467,6 +518,7 @@ issueFilterButtons.forEach((button) => {
 
 renderIssues();
 renderPassport();
+renderAcceptance();
 renderChat();
 renderStages();
 renderPhotoReport();
