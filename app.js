@@ -7,6 +7,7 @@ const chatMessages = document.querySelector("#chatMessages");
 const issuesList = document.querySelector("#issuesList");
 const photoReportGrid = document.querySelector("#photoReportGrid");
 const actionsList = document.querySelector("#actionsList");
+const updatesList = document.querySelector("#updatesList");
 const stageFilterButtons = [...document.querySelectorAll("[data-stage-filter]")];
 const issueFilterButtons = [...document.querySelectorAll("[data-issue-filter]")];
 let activeStageFilter = "all";
@@ -93,6 +94,23 @@ const mockData = {
       date: "После приемки коммуникаций",
       owner: "Прораб и заказчик",
       link: "Следующий этап после электрики и сантехники",
+    },
+  ],
+  updates: [
+    {
+      date: "26 июня",
+      title: "Добавлен запрос на фото кухни",
+      text: "Заказчик попросил показать зону перед закрытием стен.",
+    },
+    {
+      date: "25 июня",
+      title: "Сантехника перешла в работу",
+      text: "Выводы воды собраны, проверка соединений запланирована на утро.",
+    },
+    {
+      date: "21 июня",
+      title: "Черновые работы закрыты",
+      text: "Стены выровнены, поверхности готовы к коммуникациям.",
     },
   ],
   issues: [
@@ -464,6 +482,35 @@ function renderActions() {
   });
 }
 
+function renderUpdates() {
+  if (!updatesList) {
+    return;
+  }
+
+  updatesList.innerHTML = "";
+
+  mockData.updates.forEach((update) => {
+    const item = document.createElement("li");
+    item.className = "update-item";
+
+    const date = document.createElement("time");
+    date.textContent = update.date;
+
+    const content = document.createElement("div");
+    content.className = "update-content";
+
+    const title = document.createElement("strong");
+    title.textContent = update.title;
+
+    const text = document.createElement("p");
+    text.textContent = update.text;
+
+    content.append(title, text);
+    item.append(date, content);
+    updatesList.append(item);
+  });
+}
+
 function updateSummary() {
   const done = mockData.stages.filter((s) => s.status === "done").length;
   const active = mockData.stages.filter((s) => s.status === "active").length;
@@ -523,5 +570,6 @@ renderChat();
 renderStages();
 renderPhotoReport();
 renderActions();
+renderUpdates();
 updateSummary();
 setState("filled");

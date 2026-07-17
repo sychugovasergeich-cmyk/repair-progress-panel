@@ -75,6 +75,7 @@ p {
   .workspace,
   .photo-report,
   .next-actions,
+  .updates-panel,
   .client-note,
   .issues-panel,
   .object-chat,
@@ -408,6 +409,11 @@ h3 {
   padding: 22px;
 }
 
+.updates-panel {
+  margin-bottom: 18px;
+  padding: 22px;
+}
+
 .section-heading {
   margin-bottom: 18px;
 }
@@ -622,6 +628,47 @@ h3 {
   font-size: 13px;
   font-weight: 900;
   line-height: 1.35;
+}
+
+.updates-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.update-item {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 14px;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--panel-soft);
+}
+
+.update-item time {
+  color: var(--green-dark);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.update-content {
+  min-width: 0;
+}
+
+.update-content strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+
+.update-content p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 .stage-content {
@@ -848,6 +895,7 @@ body[data-view-state="empty"] .acceptance-panel,
 body[data-view-state="empty"] .stages-grid,
 body[data-view-state="empty"] .photo-report,
 body[data-view-state="empty"] .next-actions,
+body[data-view-state="empty"] .updates-panel,
 body[data-view-state="empty"] .details-grid {
   display: none;
 }
@@ -907,6 +955,7 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
   .workspace,
   .photo-report,
   .next-actions,
+  .updates-panel,
   .client-note,
   .issues-panel,
   .object-chat,
@@ -954,6 +1003,11 @@ body[data-view-state="success"] .stage-card.is-active:first-of-type .status {
 
   .passport-list {
     grid-template-columns: 1fr;
+  }
+
+  .update-item {
+    grid-template-columns: 1fr;
+    gap: 6px;
   }
 
   .state-buttons button,
