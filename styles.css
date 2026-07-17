@@ -534,8 +534,10 @@ h3 {
 .photo-placeholder {
   display: grid;
   place-items: center;
+  position: relative;
   min-width: 0;
   min-height: 150px;
+  overflow: hidden;
   border: 1px solid #cfd9ce;
   border-radius: 8px;
   background:
@@ -545,6 +547,28 @@ h3 {
   color: var(--muted);
   font-weight: 900;
   text-align: center;
+}
+
+.photo-placeholder::before,
+.photo-preview::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(23, 32, 28, 0.12);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, transparent 48%, rgba(23, 32, 28, 0.1) 49%, transparent 51%),
+    linear-gradient(0deg, transparent 48%, rgba(23, 32, 28, 0.08) 49%, transparent 51%);
+  opacity: 0.7;
+}
+
+.photo-placeholder span,
+.photo-preview span {
+  position: relative;
+  z-index: 1;
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: rgba(255, 255, 255, 0.76);
 }
 
 .photo-report-grid {
@@ -565,13 +589,107 @@ h3 {
 .photo-preview {
   display: grid;
   place-items: center;
+  position: relative;
   min-height: 150px;
+  overflow: hidden;
   background:
     linear-gradient(135deg, rgba(23, 32, 28, 0.1), transparent 42%),
     linear-gradient(315deg, rgba(49, 95, 130, 0.18), transparent 50%),
     #eef3ef;
   color: var(--muted);
   font-weight: 900;
+}
+
+.photo-placeholder.is-interior,
+.photo-preview.is-interior {
+  background:
+    linear-gradient(135deg, rgba(180, 122, 43, 0.18), transparent 42%),
+    linear-gradient(315deg, rgba(49, 95, 130, 0.16), transparent 48%),
+    #f7f0e7;
+}
+
+.photo-placeholder.is-interior::before,
+.photo-preview.is-interior::before {
+  background:
+    linear-gradient(90deg, transparent 46%, rgba(180, 122, 43, 0.24) 47%, transparent 49%),
+    linear-gradient(0deg, transparent 62%, rgba(49, 95, 130, 0.18) 63%, transparent 65%);
+}
+
+.photo-placeholder.is-plumbing,
+.photo-preview.is-plumbing {
+  background:
+    linear-gradient(135deg, rgba(49, 95, 130, 0.22), transparent 44%),
+    linear-gradient(315deg, rgba(31, 104, 77, 0.12), transparent 48%),
+    #edf7fb;
+}
+
+.photo-placeholder.is-plumbing::before,
+.photo-preview.is-plumbing::before {
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent 34%, rgba(49, 95, 130, 0.26) 35%, transparent 37%),
+    linear-gradient(0deg, transparent 56%, rgba(49, 95, 130, 0.22) 57%, transparent 60%);
+}
+
+.photo-placeholder.is-electric,
+.photo-preview.is-electric {
+  background:
+    linear-gradient(135deg, rgba(180, 122, 43, 0.24), transparent 44%),
+    linear-gradient(315deg, rgba(23, 32, 28, 0.1), transparent 48%),
+    #fff6dc;
+}
+
+.photo-placeholder.is-electric::before,
+.photo-preview.is-electric::before {
+  background:
+    linear-gradient(90deg, transparent 24%, rgba(180, 122, 43, 0.28) 25%, transparent 27%, transparent 70%, rgba(180, 122, 43, 0.22) 71%, transparent 73%),
+    linear-gradient(0deg, transparent 38%, rgba(23, 32, 28, 0.1) 39%, transparent 41%);
+}
+
+.photo-placeholder.is-demolition,
+.photo-preview.is-demolition {
+  background:
+    linear-gradient(135deg, rgba(104, 116, 109, 0.28), transparent 42%),
+    linear-gradient(315deg, rgba(179, 75, 63, 0.16), transparent 48%),
+    #f1f0eb;
+}
+
+.photo-placeholder.is-demolition::before,
+.photo-preview.is-demolition::before {
+  transform: rotate(-7deg);
+  background:
+    linear-gradient(135deg, transparent 44%, rgba(104, 116, 109, 0.22) 45%, transparent 48%),
+    linear-gradient(45deg, transparent 50%, rgba(179, 75, 63, 0.16) 51%, transparent 54%);
+}
+
+.photo-placeholder.is-rough,
+.photo-preview.is-rough {
+  background:
+    linear-gradient(135deg, rgba(104, 116, 109, 0.2), transparent 42%),
+    linear-gradient(315deg, rgba(49, 95, 130, 0.12), transparent 48%),
+    #f0f2ee;
+}
+
+.photo-placeholder.is-rough::before,
+.photo-preview.is-rough::before {
+  background:
+    linear-gradient(90deg, transparent 18%, rgba(104, 116, 109, 0.2) 19%, transparent 21%, transparent 52%, rgba(104, 116, 109, 0.16) 53%, transparent 55%),
+    linear-gradient(0deg, transparent 28%, rgba(104, 116, 109, 0.16) 29%, transparent 31%, transparent 68%, rgba(49, 95, 130, 0.12) 69%, transparent 71%);
+}
+
+.photo-placeholder.is-finish,
+.photo-preview.is-finish {
+  background:
+    linear-gradient(135deg, rgba(31, 104, 77, 0.16), transparent 42%),
+    linear-gradient(315deg, rgba(180, 122, 43, 0.16), transparent 48%),
+    #f7fbf3;
+}
+
+.photo-placeholder.is-finish::before,
+.photo-preview.is-finish::before {
+  background:
+    linear-gradient(90deg, transparent 31%, rgba(31, 104, 77, 0.18) 32%, transparent 34%, transparent 65%, rgba(31, 104, 77, 0.14) 66%, transparent 68%),
+    linear-gradient(0deg, transparent 72%, rgba(180, 122, 43, 0.16) 73%, transparent 75%);
 }
 
 .photo-card.is-attention .photo-preview {

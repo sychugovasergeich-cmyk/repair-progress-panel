@@ -911,6 +911,46 @@ function renderIssues() {
   });
 }
 
+function getPhotoTheme(text) {
+  const normalizedText = text.toLowerCase();
+
+  if (normalizedText.includes("кух") || normalizedText.includes("гостин")) {
+    return "interior";
+  }
+  if (normalizedText.includes("сантех") || normalizedText.includes("сануз")) {
+    return "plumbing";
+  }
+  if (normalizedText.includes("электр") || normalizedText.includes("розет")) {
+    return "electric";
+  }
+  if (normalizedText.includes("демонтаж") || normalizedText.includes("мусор")) {
+    return "demolition";
+  }
+  if (normalizedText.includes("чернов") || normalizedText.includes("стен")) {
+    return "rough";
+  }
+  if (normalizedText.includes("отдел") || normalizedText.includes("плинтус") || normalizedText.includes("краск")) {
+    return "finish";
+  }
+
+  return "site";
+}
+
+function getPhotoLabel(text) {
+  const theme = getPhotoTheme(text);
+  const labels = {
+    demolition: "Демонтаж",
+    electric: "Электрика",
+    finish: "Отделка",
+    interior: "Интерьер",
+    plumbing: "Сантехника",
+    rough: "Черновые",
+    site: "Объект",
+  };
+
+  return labels[theme];
+}
+
 function renderStages() {
   if (!stagesGrid) {
     return;
@@ -935,10 +975,10 @@ function renderStages() {
     card.className = `stage-card is-${stage.status}`;
 
     const photo = document.createElement("div");
-    photo.className = "photo-placeholder";
+    photo.className = `photo-placeholder is-${getPhotoTheme(stage.title)}`;
 
     const photoSpan = document.createElement("span");
-    photoSpan.textContent = "Фото этапа";
+    photoSpan.textContent = getPhotoLabel(stage.title);
     photo.append(photoSpan);
 
     const content = document.createElement("div");
@@ -976,11 +1016,11 @@ function renderPhotoReport() {
     card.className = `photo-card is-${photo.tone}`;
 
     const preview = document.createElement("div");
-    preview.className = "photo-preview";
+    preview.className = `photo-preview is-${getPhotoTheme(`${photo.title} ${photo.stage}`)}`;
     preview.setAttribute("aria-hidden", "true");
 
     const previewLabel = document.createElement("span");
-    previewLabel.textContent = "Фото";
+    previewLabel.textContent = getPhotoLabel(`${photo.title} ${photo.stage}`);
     preview.append(previewLabel);
 
     const content = document.createElement("div");
